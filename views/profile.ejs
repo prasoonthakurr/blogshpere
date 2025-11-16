@@ -1,0 +1,32 @@
+<div class="profile-card">
+        <div class="profile-header">
+            <img src="<%= user.avatar || 'https://t4.ftcdn.net/jpg/08/75/45/97/240_F_875459719_8i7J3atGbsDoRPT0ZW0DjBpgAFVTrKAe.jpg' %>" alt="Profile Picture">
+            <h2 class="fw-bold mb-0"><%= user.name %></h2>
+            <p class="mb-0"><%= user.role %></p>
+        </div>
+        <div class="profile-body">
+            <h4 class="mb-3">Personal Information</h4>
+            <table class="table table-bordered text-center align-middle">
+                <tbody>
+                    <tr>
+                        <th>Email</th>
+                        <td><%= user.email %></td>
+                    </tr>
+                    <tr>
+                        <th>Role</th>
+                        <td><%= user.role %></td>
+                    </tr>
+                    <tr>
+                        <th>Joined On</th>
+                        <td><%= new Date(user.createdAt).toDateString() %></td>
+                    </tr>
+                    <% if(user.role === "admin"){ %>
+                      <tr>
+                          <th>Sector</th>
+                          <td><%= user.sectorNames.join(", ") %></td>
+                      </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>

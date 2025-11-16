@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BlogSphere</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="text-dark bg-light">
+  <div class="d-flex full-height overflow-y-scroll">
+    <div class="sidebar d-flex flex-column mr shadow-sm">
+      <%- include('sidebar') %>
+    </div>
+    <div class="main-content p-3">
+      <main class="container px-5 py-3">
+        <%- body %>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<h2 class="fs-2 fw-bold mb-2">Add Sector</h2>
+<p class="text-muted fs-6 my-4">Create and manage sectors for organizing blogs</p>
+<form action="/api/user/add-sector" method="POST">
+  <div class="mb-3 d-flex gap-4 align-items-end">
+    <div class="w-75">
+      <label for="sectorName" class="form-label">Sector Name</label>
+      <input type="text" class="form-control bg-light border-secondary-subtle py-3 rounded-4" id="sectorName" name="sectorName" required>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-dark fs-5 rounded-pill px-5 py-3 submit-btn-padding">Add sector</button>
+    </div>
+  </div>
+</form>
+
+<h2 class="my-4">Available Sectors</h2>
+<p class="text-muted fs-6 my-4">Browse the list of sectors available for blog categorization</p>
+<table class="table table-bordered table-hover text-center">
+  <thead class="table-secondary text-uppercase text-muted small">
+    <tr>
+      <th>S. No.</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody class="cursor-pointer">
+    <% sectors.forEach((s, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= s.name %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

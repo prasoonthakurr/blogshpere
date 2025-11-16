@@ -1,0 +1,103 @@
+<div>
+  <div>
+    <h1 class="fs-2 fw-bold mb-2">Edit User</h1>
+    <p class="text-muted fs-6 my-4">Make changes to the details below to update the user</p>
+
+    <form id="blogForm" method="POST" action="/api/user/edit-user/<%= editUser.id %>" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Name</label>
+        <input type="text" name="name" required value="<%= editUser.name %>" 
+          class="form-control bg-light border-secondary-subtle rounded-4 py-3" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Email</label>
+        <input type="email" name="email" required value="<%= editUser.email %>" 
+          class="form-control bg-light border-secondary-subtle rounded-4 py-3" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Password</label>
+        <input type="password" name="password" placeholder="Leave blank to keep current password"
+          class="form-control bg-light border-secondary-subtle rounded-4 py-3" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Role</label>
+        <select name="role" id="roleSelect" required 
+          class="form-select bg-light border-secondary-subtle rounded-4 py-3">
+          <option value="user" <%= editUser.role === 'user' ? 'selected' : '' %>>User</option>
+          <% if(currUser.role == "superadmin"){ %>
+            <option value="admin" <%= editUser.role === 'admin' ? 'selected' : '' %>>Admin</option>
+          <% } %>
+        </select>
+      </div>
+
+      <% if(currUser.role == "superadmin"){ %>
+        <div class="mb-3" id="sectorField" <%= editUser.role === 'admin' ? '' : 'style="display:none;"' %>>
+          <label class="form-label fw-semibold d-block">Select Sectors <span class="text-danger">*</span></label>
+  
+          <% sectors.forEach(s => { %>
+            <div class="form-check">
+              <input class="form-check-input sectors" type="checkbox" name="sectors" value="<%= s.id %>"
+                <%= editUser.sector && editUser.sector.includes(s.id) ? 'checked' : '' %>>
+              <label class="form-check-label"><%= s.name %></label>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <div id="sectorError" class="text-danger my-2" style="display: none;">
+        Admins must be assigned at least one sector.
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Upload Avatar</label>
+        <input type="file" name="avatar" accept="image/*" class="form-control bg-light border-secondary-subtle rounded-4 py-3" />
+        <small class="text-muted d-block mb-1 text-center">or</small>
+        <input type="url" name="imageUrl" placeholder="https://example.com/image.jpg"
+          class="form-control bg-light border-secondary-subtle py-3 rounded-4" />
+      </div>
+      <div>
+        <% if(editUser.avatar){ %>
+          <small class="text-muted d-block mt-1">Current: </small>
+          <img src="<%= editUser.avatar %>" alt="avatar" width="200" class="m-4">
+        <% } %>
+      </div>
+      <div class="w-100">
+        <button type="submit" class="w-100 btn btn-dark fs-5 rounded-pill fw-bold submit-btn-padding">Update User</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script>
+    const roleSelect = document.getElementById("roleSelect");
+    const sectorField = document.getElementById("sectorField");
+    const form = document.getElementById("blogForm");
+    const checkboxes = document.querySelectorAll(".sectors");
+    const errorDiv = document.getElementById("sectorError");
+    function toggleSectorField(){
+      if(!roleSelect || !sectorField) return;
+
+      if(roleSelect.value === "admin"){
+        sectorField.style.display = "block";
+      } else{
+        sectorField.style.display = "none";
+        errorDiv.style.display = "none";
+        sectorField.querySelectorAll('.sectors').forEach(cb => cb.checked = false);
+      }
+    }
+    toggleSectorField();
+    roleSelect.addEventListener("change", toggleSectorField);
+    form.addEventListener("submit", function (e) {
+      const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+      if (!isChecked && (roleSelect.value === 'admin')) {
+        e.preventDefault();
+        errorDiv.style.display = "block";
+      }
+    });
+</script>
+

@@ -1,0 +1,35 @@
+<div class="container py-4 px-2" style="max-width: 900px; margin: 0 auto;">
+  <% if (!blog.isApproved && !blog.isRejected && user && (user.role === 'superadmin' || user.role === 'admin')) { %>
+    <div class="d-flex justify-content-end gap-4 mb-3">
+      <form action="/api/user/approve-blog/<%= blog.id %>" method="POST">
+        <button type="submit" class="btn rounded-pill btn-success px-4 py-2">Approve Blog</button>
+      </form>
+
+      <form action="/api/user/reject-blog/<%= blog.id %>" method="POST">
+        <button type="submit" class="btn rounded-pill btn-danger px-4 py-2">Reject Blog</button>
+      </form>
+    </div>
+  <% } else if(user && user.id === blog.authorId){ %>
+    <div class="d-flex justify-content-end gap-4 mb-3">
+      <a href="/user/edit-blog/<%= blog.id %>">
+        <button class="btn btn-warning rounded-pill px-4 py-2">Edit Blog</button>
+      </a>
+      <form method="POST" action="/api/user/delete-blog/<%= blog.id %>">
+        <button class="btn btn-danger rounded-pill px-4 py-2">Delete Blog</button>
+      </form>
+    </div>
+  <% } %>
+  <h2 class="fw-bold mb-3 mt-5 text-center"><%= blog.title %></h2>
+  <p class="blog-description mb-4">
+    <%= blog.description.slice(0, 400) %>
+  </p>
+  <div class="text-center mb-4">
+    <img src="<%= blog.imageUrl %>" class="blog-image img-fluid rounded" alt="Blog Image" style="max-height: 450px; object-fit: cover;">
+  </div>
+  <div class="blog-description">
+    <%= blog.description.slice(400) %>
+  </div>
+  <p class="text-end text-muted mt-4">
+    <small>Posted by <%= authorName %></small>
+  </p>
+</div>

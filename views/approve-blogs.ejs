@@ -1,0 +1,46 @@
+<div>
+   <h1 class="fs-2 fw-bold mb-4">Approve Blogs</h1>
+   <p class="text-muted fs-6 my-4">Review and approve blogs submitted by users</p>
+  <% if (blogs.length === 0) { %>
+    <div class="bg-light border border-2 border-secondary-subtle rounded-4 py-3 text-center">
+      No blogs approval pending.
+    </div>
+  <% } else { %>
+    <div class="mt-4 d-flex flex-wrap gap-4">
+    <% blogs.forEach(blog => { %>
+        <div class="card shadow-sm" onclick="location.href='blog/<%= blog.id %>'" style="width: 20rem;">
+          <% if(blog.imageUrl) { %>
+            <img src="<%= blog.imageUrl %>" class="card-img-top cursor-pointer" alt="Blog Image" style="height: 200px; object-fit: cover;">
+          <% } %>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title cursor-pointer">
+              <%= blog.title.length > 50
+                  ? blog.title.slice(0, 50) + '...' 
+                  : blog.title %>
+            </h5>
+            <p class="card-text text-muted cursor-pointer">
+              <%= blog.description.length > 100 
+                    ? blog.description.slice(0, 100) + '...' 
+                    : blog.description %>
+            </p>
+            <div>
+              <span class="badge mt-2 bg-success me-2"><%= blog.sector %></span>
+            </div>
+            <% if (blog.author) { %>
+              <p class="mb-0 mt-2 text-muted small">By <strong><%= blog.author.name %></strong></p>
+              <p class="text-muted small">on <%= blog.createdAt.toDateString() %></p>
+            <% } %>
+            <div class="d-flex gap-2 flex-column">
+              <form method="POST" action="/api/user/approve-blog/<%= blog.id %>">
+                <button class="btn btn-success btn-sm w-100">Approve</button>
+              </form>
+              <form method="POST" action="/api/user/reject-blog/<%= blog.id %>">
+                <button class="btn btn-danger btn-sm w-100">Reject</button>
+              </form>
+            </div>
+          </div>
+        </div>
+    <% }) %>
+  </div>
+  <% } %>
+</div>

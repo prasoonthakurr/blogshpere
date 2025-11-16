@@ -1,0 +1,57 @@
+<div class="d-flex flex-column min-vh-100 p-3 mb-3">
+    <a href="/" class="d-flex align-items-center text-black text-decoration-none">
+        <div class="fs-2 fw-bold text-brown m-3 mx-0">BlogSphere</div>
+    </a>
+    <ul class="nav flex-nowrap flex-column h-100 gap-2 justify-content-between">
+        <% if(user) { %>
+            <div class="d-flex flex-column gap-2">
+                <li>
+                    <a href="/" class="nav-link btn-custom py-2 rounded-pill">View Blogs</a>
+                </li>
+                <% if(user.role !== "user") { %>
+                    <li>
+                        <a href="/user/add-user" class="nav-link btn-custom py-2 rounded-pill">Add User</a>
+                    </li>
+                <% } %>
+                <% if(user.role !== "user") { %>
+                    <li>
+                        <a href="/user/view-users" class="nav-link btn-custom rounded-pill">View Users</a>
+                    </li>
+                <% } %>
+                <% if(user.role !== "user") { %>
+                    <li>
+                        <a href="/user/approve-blogs" class="nav-link btn-custom rounded-pill">Approve Blogs</a>
+                    </li>
+                <% } %>
+                <% if(user.role !== "user") { %>
+                    <li>
+                        <a href="/user/manage-blogs" class="nav-link btn-custom rounded-pill">Manage Blogs</a>
+                    </li>
+                <% } %>
+                <li>
+                    <a href="/user/create-blog" class="nav-link btn-custom rounded-pill">Create Blog</a>
+                </li>
+                <% if(user.role === "superadmin") { %>
+                    <li>
+                        <a href="/user/add-sector" class="nav-link btn-custom rounded-pill">Add Sector</a>
+                    </li>
+                <% } %>
+            </div>
+            <div class="d-flex flex-column gap-2">
+                <li>
+                    <a href="/user/profile" class="nav-link btn-custom rounded-pill">Profile</a>
+                </li>
+                <li>
+                    <a href="/user/my-blogs" class="nav-link btn-custom rounded-pill">My Blogs</a>
+                </li>
+                <li>
+                    <a href="/api/auth/logout" class="nav-link btn-custom rounded-pill">Logout</a>
+                </li>
+            </div>
+        <% } else { %>
+            <li>
+                <a href="/auth/login" class="nav-link btn-custom rounded-pill">Login</a>
+            </li>
+        <% } %>
+    </ul>
+</div>
