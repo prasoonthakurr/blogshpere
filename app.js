@@ -12,7 +12,7 @@ const { localUser } = require("./middlewares/authMiddleware");
 
 require("dotenv").config();
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 connectToDB();
 
 //middlewares
@@ -21,6 +21,7 @@ app.use(expressLayout);
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 app.use(localUser);
+app.use(express.static("public"));
 app.use('/uploads', express.static('uploads'));
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.set('view engine', 'ejs');
