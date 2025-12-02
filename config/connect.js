@@ -3,6 +3,7 @@ const sequelize = require("../util/db");
 
 const connectToDB = async() => {
     try{
+        await sequelize.authenticate();
         await sequelize.sync();
         await users.findOrCreate({
                 where: { email: 'superadmin@gmail.com' },
